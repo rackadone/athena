@@ -1,0 +1,16 @@
+{
+  "name": "athena",
+  "version": "0.0.1",
+  "description": "Project Athena",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jade": "^1.11.0",
+    "mongodb": "^1.4.39",
+    "mongoskin": "^1.4.13"
+  }
+}
