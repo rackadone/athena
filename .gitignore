@@ -3,6 +3,7 @@ logs
 *.log
 
 # Notes
+notes
 *.note
 
 # Runtime data

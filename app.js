@@ -3,6 +3,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var bodyParser  = require('body-parser');
+var fs = require('fs');
 
 var app = express();
 app.locals.appTitle = 'PROJECT ATHENA';
@@ -26,15 +27,22 @@ app.get('/notes', function (req, res) {
 });
 
 app.post('/notes/save', function (req, res, next) {
-  //if (!req.body.html) return next(new Error('No article payload.'));
-  // var article = req.body.article;
-  // article.published = false;
+  if (!req.body.html) return next(new Error('No html payload.'));
+  var html = req.body.html;
+  
   // req.collections.articles.insert(article, function(error, articleResponse) {
   //   if (error) return next(error);
   //   res.send(articleResponse);
   // });
-  console.log(JSON.stringify(req.body));
-  res.send('happy');
+  fs.writeFile('notes/new_file', html, function(err) {
+    if (err) {
+      console.log(err);
+      res.send('error saving file');
+    }
+    else {
+      res.send('happy');
+    }
+  });
 
 });
 
