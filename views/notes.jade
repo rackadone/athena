@@ -1,0 +1,17 @@
+// This is where the user can use
+// a basic text editor to write files
+
+extends layout
+
+block scripts
+  script(type="text/javascript", src="/js/notes.js")
+block sheets
+  link(rel='stylesheet', href='/css/notes.css')
+
+block page 
+  - var menu = 'notes'
+block content
+  h1 notes
+  p.lead.athena-file-descr writing to file:
+  div(contenteditable=true).athena-editor
+  button.athena-btn.athena-save-btn Save

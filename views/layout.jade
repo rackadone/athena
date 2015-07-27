@@ -9,16 +9,19 @@ html
     // Scripts
     script(type="text/javascript", src="/components/jquery/dist/jquery.min.js")
     script(type="text/javascript", src="/components/bootstrap/dist/js/bootstrap.min.js")
+    
+    block scripts
 
     // Sheets
     link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/css/index.css')
+    link(rel='stylesheet', href='/css/style.css')
+
+    block sheets
     
   body
     #wrap
       .container
         h1.page-header= appTitle
-        p.lead PROJECT ATHENA MAIN PAGE
         block page
         block header
           div
