@@ -1,22 +1,26 @@
 $(function () {
   $('.athena-save-btn').click(function (event) {
-    var html = $('.athena-editor').html();
-
     // check if note is new
-    var $fileName = $('.athena-file-name');
-    if ($fileName.hasClass('athena-new-file')) {
+    var $fileDescr = $('.athena-file-descr input');
+    if ($fileDescr.hasClass('athena-new-file')) {
       // create new file at server
+      var title = $('.athena-file-descr input').val();
+      var html = $('.athena-editor').html();
+
       $.ajax({
         url: '/notes/save',
         type: 'POST',
-        data: JSON.stringify({html: html}),
+        data: JSON.stringify({
+          title: title,
+          html: html
+        }),
         contentType: 'application/json',
         success: function (data) {
           console.log(data);
 
           // on success, make changes
-          $fileName.removeClass('athena-new-file');
-          $fileName.text('File Saved');
+          $fileDescr.removeClass('athena-new-file');
+          //$fileDescr.text('File Saved');
         },
         error: function (jqXHR, textStatus, err) {
           console.log('text status '+textStatus+', err '+err);

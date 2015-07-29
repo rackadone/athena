@@ -13,6 +13,11 @@ block page
 block content
   h1 notes
   p.lead.athena-file-descr writing to file:&nbsp;
-    span.athena-file-name.athena-new-file untitled
+    //span.athena-new-file new file
+    input.athena-new-file(
+      type='text'
+      value='new file'
+    )
+
   div(contenteditable=true).athena-editor
   button.athena-btn.athena-save-btn Save

@@ -27,20 +27,25 @@ app.get('/notes', function (req, res) {
 });
 
 app.post('/notes/save', function (req, res, next) {
-  if (!req.body.html) return next(new Error('No html payload.'));
+  if (!req.body.html) {
+    return next(new Error('No html payload.'));
+  }
+  var title = req.body.title;
   var html = req.body.html;
   
   // req.collections.articles.insert(article, function(error, articleResponse) {
   //   if (error) return next(error);
   //   res.send(articleResponse);
   // });
-  fs.writeFile('notes/new_file', html, function(err) {
+  var filePath = 'notes/' + title;
+
+  fs.writeFile(filePath, html, function(err) {
     if (err) {
       console.log(err);
       res.send('error saving file');
     }
     else {
-      res.send('happy');
+      res.send('file saved');
     }
   });
 
