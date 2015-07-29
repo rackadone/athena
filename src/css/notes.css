@@ -18,3 +18,14 @@
 
 .athena-new-file {
   color: #dd6c6c; }
+
+.athena-file-descr input {
+  text-transform: none; }
+
+.athena-file-list-header {
+  font-weight: bold;
+  font-size: 16px; }
+
+.athena-file-list-item {
+  padding-bottom: 3px;
+  padding-top: 3px; }

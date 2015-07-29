@@ -12,12 +12,19 @@ block page
   - var menu = 'notes'
 block content
   h1 notes
-  p.lead.athena-file-descr writing to file:&nbsp;
-    //span.athena-new-file new file
-    input.athena-new-file(
-      type='text'
-      value='new file'
-    )
-
-  div(contenteditable=true).athena-editor
-  button.athena-btn.athena-save-btn Save
+  div.col-md-2
+  div.col-md-10
+    p.lead.athena-file-descr writing to file:&nbsp;
+      //span.athena-new-file new file
+      input.athena-new-file(
+        type='text'
+        value='new file'
+      )
+  div.col-md-2
+    div.row.athena-file-list-header list of files
+    for file in files
+      dif.row.athena-file-list-item
+        a(href="")= file
+  div.col-md-10
+    div(contenteditable=true).athena-editor
+    button.athena-btn.athena-save-btn Save

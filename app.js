@@ -23,7 +23,9 @@ app.get('/', function (req, res) {
 });
 
 app.get('/notes', function (req, res) {
-  res.render('notes', {});
+  // Get list of all current files
+  var files = fs.readdirSync('notes');
+  res.render('notes', {files: files});
 });
 
 app.post('/notes/save', function (req, res, next) {
