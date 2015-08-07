@@ -28,6 +28,10 @@ app.get('/notes', function (req, res) {
   res.render('notes', {files: files});
 });
 
+app.get('/calories', function (req, res) {
+  res.render('calories');
+});
+
 app.post('/notes/save', function (req, res, next) {
   if (!req.body.html) {
     return next(new Error('No html payload.'));
