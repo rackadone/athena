@@ -9,8 +9,9 @@ block sheets
   link(rel='stylesheet', href='/css/calories.css')
 
 block page 
-  - var menu = 'calories'
+  - var menu = 'calories';
+  - var parsedData = JSON.parse(data);
 block content
   h1 calories
   div.athena-calories-calendar
-  div #{data}
+  div #{parsedData._comment}

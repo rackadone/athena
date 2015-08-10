@@ -38,10 +38,31 @@ app.get('/calories', function (req, res) {
 
   // Attempt to retreive data
   fs.readFile('calendar/calendar.json', function (err, data) {
-    if (err) throw err;
-    console.log(data);
-
-    res.render('calories', {data: data});
+    if (err) {
+      console.log();
+      if (err.errno == -2) {
+        // There is no calendar.json file.
+        // create this file
+        var defaultCalendar = '{"_comment": "default json","envision": "The world"}';
+        fs.writeFile('calendar/calendar.json', defaultCalendar, function(err) {
+          if (err) {
+            console.log(err);
+            res.render('error');
+          }
+          else {
+            res.render('calories', {data: defaultCalendar});
+          }
+            
+        });
+      }
+      else {
+        // Some other issue
+        res.render('error');  
+      }
+    }
+    else {
+      res.render('calories', {data: data});      
+    }
   });
 
   
