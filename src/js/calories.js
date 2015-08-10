@@ -43,6 +43,7 @@ $(function () {
     for (var i = 0; i < NUM_DAYS_IN_WEEK; i++) {
       $calendarHeader.append('<div class="col-sm-1 athena-calories-calendar-day">' + daysInWeek[i] + '</div>');
     }
+
     $calendar.prepend($calendarHeader);
   }
 

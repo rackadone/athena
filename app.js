@@ -29,7 +29,22 @@ app.get('/notes', function (req, res) {
 });
 
 app.get('/calories', function (req, res) {
-  res.render('calories');
+  // Get current date.
+  var today = new Date();
+  var day = today.getDate();
+  var month = today.getMonth() + 1;
+
+  // Get saved JSON data of calorie calendar
+
+  // Attempt to retreive data
+  fs.readFile('calendar/calendar.json', function (err, data) {
+    if (err) throw err;
+    console.log(data);
+
+    res.render('calories', {data: data});
+  });
+
+  
 });
 
 app.post('/notes/save', function (req, res, next) {
