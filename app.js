@@ -4,8 +4,12 @@ var http = require('http');
 var path = require('path');
 var bodyParser  = require('body-parser');
 var fs = require('fs');
+var fileIo = require('./modules/fileIo');
 
 var app = express();
+
+
+
 app.locals.appTitle = 'PROJECT ATHENA';
  
 // Application Settings
@@ -39,20 +43,23 @@ app.get('/calories', function (req, res) {
   // Attempt to retreive data
   fs.readFile('calendar/calendar.json', function (err, data) {
     if (err) {
-      console.log();
       if (err.errno == -2) {
         // There is no calendar.json file.
         // create this file
-        var defaultCalendar = '{"_comment": "default json","envision": "The world"}';
-        fs.writeFile('calendar/calendar.json', defaultCalendar, function(err) {
-          if (err) {
-            console.log(err);
-            res.render('error');
-          }
+        // TODO: This does not handle the case where the
+        // calendar folder doesn't exist
+        // Same with the Notes file IO mechanism.
+        //var defaultCalendar = '{"_comment": "default json","envision": "The world"}';
+
+        // Copy default file into calendar folder
+        fileIo.copyFile('config/default_calendar.json', 'calendar/calendar.json', function(err) {
+          console.log('FileIO error: ' + err);
+        });
+        fs.readFile('calendar/calendar.json', function (err, data) {
+          if (err) {throw err}
           else {
-            res.render('calories', {data: defaultCalendar});
+            res.render('calories', {data:data})
           }
-            
         });
       }
       else {
@@ -96,7 +103,10 @@ app.post('/notes/save', function (req, res, next) {
 app.all('*', function(req, res) {
   res.sendStatus(404);
 });
- 
+
+
+//fileIo.copyFile('config/default_calendar.json', 'calendar/calendar.json');
+
 http
   .createServer(app)
   .listen(
