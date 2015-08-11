@@ -37,6 +37,7 @@ app.get('/calories', function (req, res) {
   var today = new Date();
   var day = today.getDate();
   var month = today.getMonth() + 1;
+  var year = today.getFullYear();
 
   // Get saved JSON data of calorie calendar
 
@@ -58,7 +59,12 @@ app.get('/calories', function (req, res) {
         fs.readFile('calendar/calendar.json', function (err, data) {
           if (err) {throw err}
           else {
-            res.render('calories', {data:data})
+            res.render('calories', {
+              data: data,
+              day: day,
+              month: month,
+              year: year
+            })
           }
         });
       }
@@ -68,7 +74,12 @@ app.get('/calories', function (req, res) {
       }
     }
     else {
-      res.render('calories', {data: data});      
+      res.render('calories', {
+        data: data,
+        day: day,
+        month: month,
+        year: year
+      });
     }
   });
 
