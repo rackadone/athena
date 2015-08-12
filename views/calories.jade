@@ -8,11 +8,84 @@ block scripts
 block sheets
   link(rel='stylesheet', href='/css/calories.css')
 
+mixin header
+  div
+    div.col-sm-1.athena-calories-calendar-day sunday
+    div.col-sm-1.athena-calories-calendar-day monday
+    div.col-sm-1.athena-calories-calendar-day tuesday
+    div.col-sm-1.athena-calories-calendar-day wednesday
+    div.col-sm-1.athena-calories-calendar-day thursday
+    div.col-sm-1.athena-calories-calendar-day friday
+    div.col-sm-1.athena-calories-calendar-day saturday
+
+mixin row
+  div.row
+    div.col-sm-1.athena-calories-calendar-cell
+      div.row D#
+      div.row Content
+    div.col-sm-1.athena-calories-calendar-cell
+      div.row D#
+      div.row Content
+    div.col-sm-1.athena-calories-calendar-cell
+      div.row D#
+      div.row Content
+    div.col-sm-1.athena-calories-calendar-cell
+      div.row D#
+      div.row Content
+    div.col-sm-1.athena-calories-calendar-cell
+      div.row D#
+      div.row Content
+    div.col-sm-1.athena-calories-calendar-cell
+      div.row D#
+      div.row Content
+    div.col-sm-1.athena-calories-calendar-cell
+      div.row D#
+      div.row Content
+
+
+mixin bufferCells (num)
+  - for (var i = 0; i < num; i ++)
+    li
+
+
 block page 
   - var menu = 'calories';
+  - var currentMonth = month + 1;
+  - var monthArray = [];
+  - monthArray.push('january');
+  - monthArray.push('february');
+  - monthArray.push('march');
+  - monthArray.push('april');
+  - monthArray.push('may');
+  - monthArray.push('june');
+  - monthArray.push('july');
+  - monthArray.push('august');
+  - monthArray.push('september');
+  - monthArray.push('october');
+  - monthArray.push('november');
+  - monthArray.push('december');
   - var parsedData = JSON.parse(data);
+  - var daysInMonth = function (month, year) {
+  -   return new Date(year, month, 0).getDate();
+  - }
+  - var firstDay = new Date(year, month, 1);
+  - var firstDayOfMonth = firstDay.getDay();
+  - var numPrecCells =  firstDayOfMonth % 7;
+  - var realCells = daysInMonth(month, year);
+  - var numSuccCells = 42 - realCells - numPrecCells;
+  
 block content
+  h1 numPrecCells is #{numPrecCells}
+  h1 numSuccCells is #{numSuccCells}
   h1 calories
-  h2 #{month}.#{day}.#{year}
+  h2 #{currentMonth}.#{date}.#{year}
+  +header
   div.athena-calories-calendar
-  div #{parsedData._comment}
+    ul
+      +bufferCells(numPrecCells)
+      +bufferCells(realCells)
+      +bufferCells(numSuccCells)
+
+  div.athena-calories-calendar-footer #{parsedData._comment}
+
+

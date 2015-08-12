@@ -1,29 +1,18 @@
 {
 	"_comment": "The calendar data",
 
-	"January": [
-		["Chocolate Cake", "Banana Pie"]
-	],
-	"February": [
-	],
-	"March": [
-	],
-	"April": [
-	],
-	"May": [
-	],
-	"June": [
-	],
-	"July": [
-	],
-	"August": [
-	],
-	"September": [
-	],
-	"October": [
-	],
-	"November": [
-	],
-	"December": [
+	"months": [
+		[],
+		[],
+		[],
+		[],
+		[],
+		[],
+		[],
+		[],
+		[],
+		[],
+		[]
 	]
+	
 }
