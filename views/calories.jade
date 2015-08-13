@@ -18,31 +18,6 @@ mixin header
     div.col-sm-1.athena-calories-calendar-day friday
     div.col-sm-1.athena-calories-calendar-day saturday
 
-mixin row
-  div.row
-    div.col-sm-1.athena-calories-calendar-cell
-      div.row D#
-      div.row Content
-    div.col-sm-1.athena-calories-calendar-cell
-      div.row D#
-      div.row Content
-    div.col-sm-1.athena-calories-calendar-cell
-      div.row D#
-      div.row Content
-    div.col-sm-1.athena-calories-calendar-cell
-      div.row D#
-      div.row Content
-    div.col-sm-1.athena-calories-calendar-cell
-      div.row D#
-      div.row Content
-    div.col-sm-1.athena-calories-calendar-cell
-      div.row D#
-      div.row Content
-    div.col-sm-1.athena-calories-calendar-cell
-      div.row D#
-      div.row Content
-
-
 mixin bufferCells (num)
   - for (var i = 0; i < num; i ++)
     li
@@ -64,7 +39,7 @@ block page
   - monthArray.push('october');
   - monthArray.push('november');
   - monthArray.push('december');
-  - var parsedData = JSON.parse(data);
+  //- var parsedData = JSON.parse(data);
   - var daysInMonth = function (month, year) {
   -   return new Date(year, month, 0).getDate();
   - }
@@ -86,6 +61,6 @@ block content
       +bufferCells(realCells)
       +bufferCells(numSuccCells)
 
-  div.athena-calories-calendar-footer #{parsedData._comment}
+  div.athena-calories-calendar-footer #{data}
 
 

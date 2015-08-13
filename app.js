@@ -5,10 +5,13 @@ var path = require('path');
 var bodyParser  = require('body-parser');
 var fs = require('fs');
 var fileIo = require('./modules/fileIo');
+var dbCalendar = require('./modules/db.calendar');
+
+// var mongoskin = require('mongoskin');
+// var dbUrl = process.env.MONGOHQ_URL || 'mongodb://@localhost:27017/test';
+// var db = mongoskin.db(dbUrl, {safe: true});
 
 var app = express();
-
-
 
 app.locals.appTitle = 'PROJECT ATHENA';
  
@@ -40,51 +43,60 @@ app.get('/calories', function (req, res) {
   var year = today.getFullYear();
   var day = today.getDay();
 
+  // Get data for current month
+  // TODO: Create module for this.
+  dbCalendar.getMonth(function (data) {
+    res.render('calories', {data:data});
+  });
+
+
   // Get saved JSON data of calorie calendar
 
-  // Attempt to retreive data
-  fs.readFile('calendar/calendar.json', function (err, data) {
-    if (err) {
-      if (err.errno == -2) {
-        // There is no calendar.json file.
-        // create this file
-        // TODO: This does not handle the case where the
-        // calendar folder doesn't exist
-        // Same with the Notes file IO mechanism.
-        //var defaultCalendar = '{"_comment": "default json","envision": "The world"}';
+  // // Attempt to retreive data
+  // fs.readFile('calendar/calendar.json', function (err, data) {
+  //   if (err) {
+  //     if (err.errno == -2) {
+  //       // There is no calendar.json file.
+  //       // create this file
+  //       // TODO: This does not handle the case where the
+  //       // calendar folder doesn't exist
+  //       // Same with the Notes file IO mechanism.
+  //       //var defaultCalendar = '{"_comment": "default json","envision": "The world"}';
 
-        // Copy default file into calendar folder
-        fileIo.copyFile('config/default_calendar.json', 'calendar/calendar.json', function(err) {
-          console.log('FileIO error: ' + err);
-        });
-        fs.readFile('calendar/calendar.json', function (err, data) {
-          if (err) {throw err}
-          else {
-            res.render('calories', {
-              data: data,
-              date: date,
-              month: month,
-              year: year,
-              day: day
-            })
-          }
-        });
-      }
-      else {
-        // Some other issue
-        res.render('error');  
-      }
-    }
-    else {
-      res.render('calories', {
-        data: data,
-        date: date,
-        month: month,
-        year: year,
-        day: day
-      });
-    }
-  });
+  //       // Copy default file into calendar folder
+  //       fileIo.copyFile('config/default_calendar.json', 'calendar/calendar.json', function(err) {
+  //         console.log('FileIO error: ' + err);
+  //       });
+
+  //       // 
+  //       fs.readFile('calendar/calendar.json', function (err, data) {
+  //         if (err) {throw err}
+  //         else {
+  //           res.render('calories', {
+  //             data: data,
+  //             date: date,
+  //             month: month,
+  //             year: year,
+  //             day: day
+  //           })
+  //         }
+  //       });
+  //     }
+  //     else {
+  //       // Some other issue
+  //       res.render('error');  
+  //     }
+  //   }
+  //   else {
+  //     res.render('calories', {
+  //       data: data,
+  //       date: date,
+  //       month: month,
+  //       year: year,
+  //       day: day
+  //     });
+  //   }
+  // });
 
   
 });
