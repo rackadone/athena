@@ -22,6 +22,20 @@ mixin bufferCells (num)
   - for (var i = 0; i < num; i ++)
     li
 
+mixin renderRealCells (realCells, numRealCells)
+  - for (var i = 0; i < numRealCells; i++) {
+  - var actualDay = i + 1;
+  -   if (realCells.length - 1 >= i) {
+        li
+          div #{actualDay}
+          div #{realCells[i]}
+  -   }
+  -   else {
+        li
+          div #{actualDay}
+  -   }
+  - }
+
 
 block page 
   - var menu = 'calories';
@@ -39,15 +53,16 @@ block page
   - monthArray.push('october');
   - monthArray.push('november');
   - monthArray.push('december');
-  //- var parsedData = JSON.parse(data);
+
   - var daysInMonth = function (month, year) {
   -   return new Date(year, month, 0).getDate();
   - }
+
   - var firstDay = new Date(year, month, 1);
   - var firstDayOfMonth = firstDay.getDay();
   - var numPrecCells =  firstDayOfMonth % 7;
-  - var realCells = daysInMonth(month, year);
-  - var numSuccCells = 42 - realCells - numPrecCells;
+  - var numRealCells = daysInMonth(month, year);
+  - var numSuccCells = 42 - numRealCells - numPrecCells;
   
 block content
   h1 numPrecCells is #{numPrecCells}
@@ -58,9 +73,9 @@ block content
   div.athena-calories-calendar
     ul
       +bufferCells(numPrecCells)
-      +bufferCells(realCells)
+      +renderRealCells(data, numRealCells)
       +bufferCells(numSuccCells)
 
-  div.athena-calories-calendar-footer #{data}
+  div.athena-calories-calendar-footer Calendar Footer
 
 

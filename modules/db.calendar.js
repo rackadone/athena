@@ -28,7 +28,7 @@ module.exports = {
         // month MUST exist.
         console.log("calendar exists");
         var currentYear = calendar[0];
-        callback(currentYear[month]);
+        callback(currentYear['months'][month]);
       }
       else {
         // if current year does not exist here,
@@ -38,18 +38,18 @@ module.exports = {
         var currentYear = {
           'year': year,
           'months': [
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            []
+            [], // jan
+            [], // feb
+            [], // mar
+            [], // apr
+            [], // may
+            [], // jun
+            [], // jul
+            ["beatle juice", "truffle oil"], // aug
+            [], // sep
+            [], // oct
+            [], // nov
+            []  // dec
           ]
         };
         calendarCollection.insert(currentYear, function (err, result) {
