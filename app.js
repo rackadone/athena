@@ -46,59 +46,20 @@ app.get('/calories', function (req, res) {
   // Get data for current month
   // TODO: Create module for this.
   dbCalendar.getMonth(function (data) {
-    res.render('calories', {data:data});
-  });
+    var today = new Date();
+    var date = today.getDate();
+    var month = today.getMonth();
+    var year = today.getFullYear();
+    var day = today.getDay();
 
-
-  // Get saved JSON data of calorie calendar
-
-  // // Attempt to retreive data
-  // fs.readFile('calendar/calendar.json', function (err, data) {
-  //   if (err) {
-  //     if (err.errno == -2) {
-  //       // There is no calendar.json file.
-  //       // create this file
-  //       // TODO: This does not handle the case where the
-  //       // calendar folder doesn't exist
-  //       // Same with the Notes file IO mechanism.
-  //       //var defaultCalendar = '{"_comment": "default json","envision": "The world"}';
-
-  //       // Copy default file into calendar folder
-  //       fileIo.copyFile('config/default_calendar.json', 'calendar/calendar.json', function(err) {
-  //         console.log('FileIO error: ' + err);
-  //       });
-
-  //       // 
-  //       fs.readFile('calendar/calendar.json', function (err, data) {
-  //         if (err) {throw err}
-  //         else {
-  //           res.render('calories', {
-  //             data: data,
-  //             date: date,
-  //             month: month,
-  //             year: year,
-  //             day: day
-  //           })
-  //         }
-  //       });
-  //     }
-  //     else {
-  //       // Some other issue
-  //       res.render('error');  
-  //     }
-  //   }
-  //   else {
-  //     res.render('calories', {
-  //       data: data,
-  //       date: date,
-  //       month: month,
-  //       year: year,
-  //       day: day
-  //     });
-  //   }
-  // });
-
-  
+    res.render('calories', {
+      data: data,
+      date: date,
+      month: month,
+      year: year,
+      day: day
+    });
+  }); 
 });
 
 app.post('/notes/save', function (req, res, next) {
