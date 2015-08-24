@@ -1,0 +1,12 @@
+.form-control:focus{
+  border-color: #EFEFEF;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(97,97,97,0.38);
+  -moz-box-shadow: 0px 0px 5px 1px rgba(97,97,97,0.38);
+  box-shadow: 0px 0px 5px 1px rgba(97,97,97,0.38);
+}
+.form-control:disabled {
+  color: white;
+  border-color: #C7C7C7;
+  background-color: #C7C7C7;
+}
+

@@ -9,8 +9,6 @@ $(function () {
 
     // Enter Logic that fills in HTML of modal #athena-calories-form-modal here!
     // Depending on items, number of rows may be different.
-
-
     $('#athena-calories-form-modal').modal({
       keyboard: true,
       show: true,
@@ -29,49 +27,151 @@ $(function () {
   });
 
   // * * * * * * * * * * * * * * *
-  // Event handlers for input blur
+  // Event handlers for item input
   // * * * * * * * * * * * * * * *
   $('#athena-calories-form-modal').on('blur', '.athena-calories-item', function() {
-    console.log('item blured');
+    modalClearFeedback();
     var $parentRow = $(this).closest('.athena-calories-entry-row');
+  });
+
+  $('#athena-calories-form-modal').on('focus', '.athena-calories-item', function() {
 
   });
 
-  $('#athena-calories-form-modal').on('blur', '.athena-calories-ratio', function() {
-    console.log('ratio blured');
+  $('#athena-calories-form-modal').on('input', '.athena-calories-item', function() {
+    var itemInput =  $(this).val();
+    var $parentRow = $(this).closest('.athena-calories-entry-row');
+    if (itemInput.length) {
+      $parentRow.find('input:not(.athena-calories-item)').prop("disabled", false);
+    }
+    else {
+      $parentRow.find('input:not(.athena-calories-item)').prop("disabled", true);
+    }
+  });
+
+  // * * * * * * * * * * * * * * *
+  // Event handlers for ratio input
+  // * * * * * * * * * * * * * * *
+  $('#athena-calories-form-modal').on('input', '.athena-calories-ratio', function() {
+    modalClearFeedback();
+    $(this).removeClass('athena-input-error');
     var $parentRow = $(this).closest('.athena-calories-entry-row');
     var ratioInput =  $(this).val();
 
     if (ratioInput.length) {
       try {
-        $(this).val(parseRatioInput(ratioInput));  
+        var ratio = parseRatioInput(ratioInput);
+        $(this).removeClass('athena-input-error');
+
+        // Fill the total cal input
+        // if user has already entered mass.
+        var massInput = $parentRow.find('.athena-calories-mass').val();
+        if (massInput.length) {
+          var mass = parseFloat(massInput);
+          $parentRow.find('.athena-calories-energy').val(mass * ratio);
+        }
       }
       catch(err) {
-        console.log("There was an error in the input");
+        $(this).addClass('athena-input-error');
+        modalDisplayFeedback("Enter a number (ex 34.00) or ratio (ex 14/100)");
+      } 
+    }
+    else {
+      $(this).removeClass('athena-input-error');
+      $parentRow.find('.athena-calories-energy').val('');
+    }
+  });
+
+  $('#athena-calories-form-modal').on('blur', '.athena-calories-ratio', function() {
+    modalClearFeedback();
+  });
+
+  $('#athena-calories-form-modal').on('focus', '.athena-calories-ratio', function() {
+    modalClearFeedback();
+    var ratioInput =  $(this).val();
+
+    if (ratioInput.length) {
+      try {
+        var ratio = parseRatioInput(ratioInput);
+      }
+      catch(err) {
+        modalDisplayFeedback("Enter a number (ex 34.00) or ratio (ex 14/100)");
+      } 
+    }
+  });
+
+  // * * * * * * * * * * * * * * *
+  // Event handlers for mass input
+  // * * * * * * * * * * * * * * *
+  $('#athena-calories-form-modal').on('input', '.athena-calories-mass', function() {
+    modalClearFeedback();
+    $(this).removeClass('athena-input-error');
+    var $parentRow = $(this).closest('.athena-calories-entry-row');
+    var massInput = $(this).val();
+
+    if (massInput.length) {
+      try {
+        var mass = parseMass(massInput);
+
+        // Fill the total cal input
+        // if user has already entered ratio.
+        var ratioInput = $parentRow.find('.athena-calories-ratio').val();
+        if (ratioInput.length) {
+          var ratio = parseRatioInput(ratioInput);
+          $parentRow.find('.athena-calories-energy').val(mass * ratio);
+        }
+      }
+      catch (err) {
+        $(this).addClass('athena-input-error');
+        modalDisplayFeedback("Enter a valid number (ex 34, 34.3)");
       }
       
     }
+    else { // meaning 0 mass
+      $(this).removeClass('athena-input-error');
 
+      // Remove value in energy
+      $parentRow.find('.athena-calories-energy').val('');
+    }
   });
 
   $('#athena-calories-form-modal').on('blur', '.athena-calories-mass', function() {
-    console.log('mass blured');
-    var $parentRow = $(this).closest('.athena-calories-entry-row');
-
+    modalClearFeedback();
   });
 
+  $('#athena-calories-form-modal').on('focus', '.athena-calories-mass', function() {
+    var massInput = $(this).val();
+    if (massInput.length) {
+      try {
+        var mass = parseMass(massInput);
+      }
+      catch (err) {
+        modalDisplayFeedback("Enter a valid number (ex 34, 34.3)");
+      }
+    }
+  });
+
+  // * * * * * * * * * * * * * * *
+  // Event handlers for energy input
+  // * * * * * * * * * * * * * * *
   $('#athena-calories-form-modal').on('blur', '.athena-calories-energy', function() {
-    console.log('energy blured');
+    modalClearFeedback();
     var $parentRow = $(this).closest('.athena-calories-entry-row');
+  });
+
+  $('#athena-calories-form-modal').on('focus', '.athena-calories-energy', function() {
 
   });
 
+  // * * * * * * * * * * * * * * *
+  // Functions for feedback display
+  // * * * * * * * * * * * * * * *
   var modalDisplayFeedback = function (feedback) {
-    
+    $('.athena-calories-modal-feedback').html('<span>'+ feedback +'</span>');
   };
 
   var modalClearFeedback = function () {
-
+    $('.athena-calories-modal-feedback').html('');
   };
 
 });
@@ -79,9 +179,9 @@ $(function () {
 // Parses input
 // Condition: input is not undefied or null
 // Returns float value
-var parseRatioInput = function (item) {
+var parseRatioInput = function (ratio) {
   // check if input is in form '=xx/xx'
-  var parsedRatioArr = item.split("/");
+  var parsedRatioArr = ratio.split("/");
 
   if (parsedRatioArr.length == 2) {
     var dividend = parseFloat(parsedRatioArr[0]),
@@ -107,6 +207,17 @@ var parseRatioInput = function (item) {
   }
 }
 
+var parseMass = function (mass) {
+  var result = parseInt(mass);
+  if (isNaN(result)) {
+    console.log('invalid mass');
+    throw "Invalid input";
+  }
+  else {
+    return result;
+  }
+}
+
 var validateItem = function (item) {
   // TODO: Add code that validates item field
   return true;
@@ -120,15 +231,15 @@ var createRow = function () {
             '</div>' +
             '<div class="col-md-2">' + 
               '<div class="input-group"></div>' + 
-              '<input type="text" placeholder="" class="form-control athena-calories-ratio">' +
+              '<input type="text" placeholder="" class="form-control athena-calories-ratio" disabled>' +
             '</div>' + 
             '<div class="col-md-2">' +
               '<div class="input-group"></div>' + 
-              '<input type="text" placeholder="" class="form-control athena-calories-mass">' + 
+              '<input type="text" placeholder="" class="form-control athena-calories-mass" disabled>' +
             '</div>' + 
             '<div class="col-md-2">' + 
               '<div class="input-group"></div>' + 
-              '<input type="text" placeholder="" class="form-control athena-calories-energy">' + 
+              '<input type="text" placeholder="" class="form-control athena-calories-energy" disabled>' + 
             '</div>' + 
           '</div>';
 };

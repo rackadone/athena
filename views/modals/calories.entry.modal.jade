@@ -11,6 +11,10 @@ div(tabindex="-1").modal.fade.athena-modal#athena-calories-form-modal
           div.col-md-2 cal/g
           div.col-md-2 g
           div.col-md-3 total cal
+
+        // If input has no data filled in from
+        // database, all inputs except item should
+        // be disabled.
         - for (var i = 0; i < 15; i++) {
         div.row.athena-calories-entry-row
           div.col-md-4.col-md-offset-1
@@ -18,16 +22,16 @@ div(tabindex="-1").modal.fade.athena-modal#athena-calories-form-modal
             input(type="text" class="form-control athena-calories-item" placeholder="")
           div.col-md-2
             div.input-group
-            input(type="text" class="form-control athena-calories-ratio" placeholder="")
+            input(type="text" class="form-control athena-calories-ratio" placeholder="" disabled)
           div.col-md-2
             div.input-group
-            input(type="text" class="form-control athena-calories-mass" placeholder="")
+            input(type="text" class="form-control athena-calories-mass" placeholder="" disabled)
           div.col-md-2
             div.input-group
-            input(type="text" class="form-control athena-calories-energy" placeholder="")
+            input(type="text" class="form-control athena-calories-energy" placeholder="" disabled)
         - }
         div.row.athena-calories-modal-btn-row
-          div.col-md-6.col-md-offset-3.athena-align-center.athena-btn.athena-calories-add-more-btn
+          div.col-md-6.col-md-offset-3.athena-align-center.athena-calories-add-more-btn
             button#calories-add-item-rows-btn Click to add more items
       div.modal-footer
         div.col-md-offset-1.col-md-8.athena-calories-modal-feedback
