@@ -1,6 +1,15 @@
-.athena-btn {
-  background-color: white;
-  color: black; }
+body {
+  font-family: helvetica; }
 
 footer {
   margin-top: 20px; }
+
+.athena-btn {
+  background-color: white;
+  color: black;
+  border-radius: 7px;
+  border: 1px solid #C7BBBB;
+  padding: 4px 12px; }
+
+.athena-align-center {
+  text-align: center; }

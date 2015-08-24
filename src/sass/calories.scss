@@ -1,43 +1,88 @@
 .athena-calories-calendar {
-	display: inline-block;
+  display: inline-block;
 }
 
 .athena-calories-calendar li {
-	margin: 1px;
-	min-height: 60px;
-	min-width: 120px;
-	width: 8.33333333%;
+  margin: 1px;
+  min-height: 60px;
+  min-width: 120px;
+  width: 8.33333333%;
 
-	// border-top: border-width border-style border-color|initial|inherit;
-	border-top: 1px solid #A4A6A7;
-	border-right: 1px solid #A4A6A7;
-	border-bottom: 2px solid #616165;
-	border-left: 2px solid #616165;
+  // border-top: border-width border-style border-color|initial|inherit;
+  border-top: 1px solid #E0DFDF;
+  border-right: 1px solid #E0DFDF;
+  border-bottom: 1px solid #E0DFDF;
+  border-left: 1px solid #E0DFDF;
+  border-radius: 4px;
 
-	float: left;
+  float: left;
 }
+
+.athena-calories-calendar li:hover {
+  background-color: #E0DFDF;
+  cursor: pointer;
+}
+
 .athena-calories-calendar ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	width: 860px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 860px;
 }
-
 
 .athena-calories-calendar-day {
-	margin: 1px;
-	margin-bottom: 3px;
-	min-width: 120px;
-	padding-bottom: 2px;
+  margin: 1px;
+  margin-bottom: 3px;
+  min-width: 120px;
+  padding-bottom: 2px;
 
-	text-transform: uppercase;
-	font-family: monospace;
+  text-transform: capitalize;
 
-	//border-top: 1px solid #A4A6A7;
-	border-right: 1px solid #A4A6A7;
-	border-bottom: 2px solid #616165;
-	//border-left: 2px solid #616165;
+  //border-top: 1px solid #A4A6A7;
+  border-right: 1px solid #A4A6A7;
+  border-bottom: 1px solid #616165;
+  //border-left: 2px solid #616165;
 }
 .athena-calories-calendar-footer {
-	display: block;
+  display: block;
+}
+
+.athena-calories-entry-row {
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
+
+.athena-calories-entry-header {
+  border-right: 1px solid #A4A6A7;
+  border-bottom: 1px solid #616165;
+}
+
+.athena-modal .athena-food-item-list div{
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.athena-calories-add-more-btn button {
+  color: #636363;
+  background-color: #F9F9F9;
+  padding: 10px 40px;
+  border-radius: 15px;
+  font-size: 15px;
+  border: 1px solid #C7C6C6;
+  margin-top: 7px
+}
+
+#athena-calories-form-modal .modal-body {
+  max-height: 190px;
+  overflow: auto;
+}
+
+.athena-calories-modal-feedback {
+  text-align:left;
+  padding-left: 0;
+  color: #FF2000;
+}
+
+.athena-calories-modal-save-btn {
+  margin-right:35px;
 }

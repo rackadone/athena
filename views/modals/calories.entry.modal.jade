@@ -1,0 +1,35 @@
+div(tabindex="-1").modal.fade.athena-modal#athena-calories-form-modal
+  div.modal-dialog
+    div.modal-content
+      div.modal-header
+        button(type='button', class='close', data-dismiss='modal', arial-label='Close')
+          span(aria-hidden='true') &times;
+        h4.modal-title Count Calories
+      div.modal-body
+        div.row.athena-food-item-list
+          div.col-md-4.col-md-offset-1 item
+          div.col-md-2 cal/g
+          div.col-md-2 g
+          div.col-md-3 total cal
+        - for (var i = 0; i < 15; i++) {
+        div.row.athena-calories-entry-row
+          div.col-md-4.col-md-offset-1
+            div.input-group
+            input(type="text" class="form-control athena-calories-item" placeholder="")
+          div.col-md-2
+            div.input-group
+            input(type="text" class="form-control athena-calories-ratio" placeholder="")
+          div.col-md-2
+            div.input-group
+            input(type="text" class="form-control athena-calories-mass" placeholder="")
+          div.col-md-2
+            div.input-group
+            input(type="text" class="form-control athena-calories-energy" placeholder="")
+        - }
+        div.row.athena-calories-modal-btn-row
+          div.col-md-6.col-md-offset-3.athena-align-center.athena-btn.athena-calories-add-more-btn
+            button#calories-add-item-rows-btn Click to add more items
+      div.modal-footer
+        div.col-md-offset-1.col-md-8.athena-calories-modal-feedback
+        div.col-md-3
+          button.athena-btn.athena-calories-modal-save-btn Save

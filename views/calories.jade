@@ -37,7 +37,8 @@ mixin renderRealCells (realCells, numRealCells)
   - }
 
 
-block page 
+block page
+  include modals/calories.entry.modal.jade
   - var menu = 'calories';
   - var currentMonth = month + 1;
   - var monthArray = [];
@@ -65,9 +66,7 @@ block page
   - var numSuccCells = 42 - numRealCells - numPrecCells;
   
 block content
-  h1 numPrecCells is #{numPrecCells}
-  h1 numSuccCells is #{numSuccCells}
-  h1 calories
+  h1 Counting Calories
   h2 #{currentMonth}.#{date}.#{year}
   +header
   div.athena-calories-calendar
