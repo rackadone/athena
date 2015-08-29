@@ -189,6 +189,13 @@ $(function () {
 
     // If left empty and the values of ratio and mass
     // were already entered, auto calculate and populate.
+
+    var ratioInput = $parentRow.find('.athena-calories-ratio').val();
+    var massInput = $parentRow.find('.athena-calories-mass').val();
+    var mass = parseNumberInput(massInput);
+    var ratio = parseRatioInput(ratioInput);
+
+    $(this).val(mass * ratio);
   });
 
   $('#athena-calories-form-modal').on('focus', '.athena-calories-energy', function() {
