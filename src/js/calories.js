@@ -29,15 +29,6 @@ $(function () {
   // * * * * * * * * * * * * * * *
   // Event handlers for item input
   // * * * * * * * * * * * * * * *
-  $('#athena-calories-form-modal').on('blur', '.athena-calories-item', function() {
-    modalClearFeedback();
-    var $parentRow = $(this).closest('.athena-calories-entry-row');
-  });
-
-  $('#athena-calories-form-modal').on('focus', '.athena-calories-item', function() {
-
-  });
-
   $('#athena-calories-form-modal').on('input', '.athena-calories-item', function() {
     var itemInput =  $(this).val();
     var $parentRow = $(this).closest('.athena-calories-entry-row');
@@ -47,6 +38,15 @@ $(function () {
     else {
       $parentRow.find('input:not(.athena-calories-item)').prop("disabled", true);
     }
+  });
+
+  $('#athena-calories-form-modal').on('blur', '.athena-calories-item', function() {
+    modalClearFeedback();
+    var $parentRow = $(this).closest('.athena-calories-entry-row');
+  });
+
+  $('#athena-calories-form-modal').on('focus', '.athena-calories-item', function() {
+
   });
 
   // * * * * * * * * * * * * * * *
@@ -111,7 +111,7 @@ $(function () {
 
     if (massInput.length) {
       try {
-        var mass = parseMass(massInput);
+        var mass = parseNumberInput(massInput);
 
         // Fill the total cal input
         // if user has already entered ratio.
@@ -124,8 +124,7 @@ $(function () {
       catch (err) {
         $(this).addClass('athena-input-error');
         modalDisplayFeedback("Enter a valid number (ex 34, 34.3)");
-      }
-      
+      } 
     }
     else { // meaning 0 mass
       $(this).removeClass('athena-input-error');
@@ -143,7 +142,7 @@ $(function () {
     var massInput = $(this).val();
     if (massInput.length) {
       try {
-        var mass = parseMass(massInput);
+        var mass = parseNumberInput(massInput);
       }
       catch (err) {
         modalDisplayFeedback("Enter a valid number (ex 34, 34.3)");
@@ -154,20 +153,64 @@ $(function () {
   // * * * * * * * * * * * * * * *
   // Event handlers for energy input
   // * * * * * * * * * * * * * * *
+  $('#athena-calories-form-modal').on('input', '.athena-calories-energy', function() {
+    modalClearFeedback();
+    $(this).removeClass('athena-input-error');
+    var $parentRow = $(this).closest('.athena-calories-entry-row');
+    var energyInput = $(this).val();
+
+    if (energyInput.length) {
+      try {
+        var mass = parseNumberInput(energyInput);
+        $(this).addClass('athena-input-manual');
+        $parentRow.find('input:not(.athena-calories-energy, .athena-calories-item)').prop('disabled', true);
+        modalDisplayFeedback("Total calories manually entered.", "manual");
+      }
+      catch (err) {
+        $(this).removeClass('athena-input-manual');
+        $(this).addClass('athena-input-error');
+        $parentRow.find('input:not(.athena-calories-energy, .athena-calories-item)').prop('disabled', false);
+        modalDisplayFeedback("Enter a valid number (ex 34, 34.3)");
+      } 
+    }
+    else { // meaning 0 calories
+      $(this).removeClass('athena-input-error');
+
+      // Remove 'manually entered' indicator
+      $(this).removeClass('athena-input-manual');
+
+      $parentRow.find('input:not(.athena-calories-energy, .athena-calories-item)').prop('disabled', false);
+    }
+  });
+
   $('#athena-calories-form-modal').on('blur', '.athena-calories-energy', function() {
     modalClearFeedback();
     var $parentRow = $(this).closest('.athena-calories-entry-row');
+
+    // If left empty and the values of ratio and mass
+    // were already entered, auto calculate and populate.
   });
 
   $('#athena-calories-form-modal').on('focus', '.athena-calories-energy', function() {
-
+    if ($(this).hasClass('athena-input-manual')) {
+      modalDisplayFeedback("Total calories manually entered.", "manual");
+    }
+    else if ($(this).hasClass('athena-input-error')) {
+      modalDisplayFeedback("Enter a valid number (ex 34, 34.3)");
+    }
   });
 
   // * * * * * * * * * * * * * * *
   // Functions for feedback display
   // * * * * * * * * * * * * * * *
-  var modalDisplayFeedback = function (feedback) {
-    $('.athena-calories-modal-feedback').html('<span>'+ feedback +'</span>');
+  var modalDisplayFeedback = function (feedback, type) {
+    if (type === 'manual') {
+      $('.athena-calories-modal-feedback').html('<span style="color:#0058FF">'+ feedback +'</span>');  
+    }
+    else {
+      $('.athena-calories-modal-feedback').html('<span>'+ feedback +'</span>');
+    }
+    
   };
 
   var modalClearFeedback = function () {
@@ -175,6 +218,10 @@ $(function () {
   };
 
 });
+
+// * * * * * * * * * * * * * * *
+// Functions for input validation & parsing
+// * * * * * * * * * * * * * * *
 
 // Parses input
 // Condition: input is not undefied or null
@@ -207,10 +254,9 @@ var parseRatioInput = function (ratio) {
   }
 }
 
-var parseMass = function (mass) {
+var parseNumberInput = function (mass) {
   var result = parseInt(mass);
   if (isNaN(result)) {
-    console.log('invalid mass');
     throw "Invalid input";
   }
   else {
@@ -218,11 +264,15 @@ var parseMass = function (mass) {
   }
 }
 
+
 var validateItem = function (item) {
   // TODO: Add code that validates item field
   return true;
 }
 
+// * * * * * * * * * * * * * * *
+// Functions directly related to calendar ui
+// * * * * * * * * * * * * * * *
 var createRow = function () {
   return '<div class="row athena-calories-entry-row">' +
            '<div class="col-md-4 col-md-offset-1">' +

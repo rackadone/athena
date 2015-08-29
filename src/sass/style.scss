@@ -30,3 +30,15 @@ footer {
   box-shadow: 0px 0px 5px 1px rgba(255,0,0,1);
   color: black;
 }
+
+.athena-input-manual {
+  border-color: #0058FF;
+  color: #0058FF;
+}
+
+.athena-input-manual.form-control:focus{
+  -webkit-box-shadow: 0px 0px 5px 1px #0058FF;
+  -moz-box-shadow: 0px 0px 5px 1px #0058FF;
+  box-shadow: 0px 0px 5px 1px #0058FF;
+  color: black;
+}
