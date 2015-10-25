@@ -224,6 +224,9 @@ $(function () {
     $('.athena-calories-modal-feedback').html('');
   };
 
+
+  $('.modal-body').caloricInputSetup();
+
 });
 
 // * * * * * * * * * * * * * * *
@@ -351,3 +354,5 @@ var calendarAddHeader = function ($calendar) {
 // var $calendar = $('.athena-calories-calendar');
 // calendarAddHeader($calendar);
 // populateCalendar($calendar);
+
+
